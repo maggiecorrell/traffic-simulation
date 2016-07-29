@@ -42,11 +42,13 @@ class Car:
         elif not self.is_able_to_move:
             self.speed = self.car_in_front.speed
         else:
-            self.accelerate
+            self.accelerate()
 
     """ Change position of car on road based on speed """
-    def move_car(self):
+    def move_car(self, road):
         self.position += self.speed
+        if self.position > road.length:
+            self.position = self.position % road.length
 
     """ Adds the car in front to make sure it can move """
     def add_relative_car(self, relative_car):
