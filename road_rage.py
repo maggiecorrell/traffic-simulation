@@ -115,8 +115,6 @@ class Simulation:
                 self.speeds.append(car.speeds)
                 self.positions.append(car.positions)
 
-        self.speeds = np.array(self.speeds)
-        self.positions = np.array(self.positions)
         mean = self.get_mean()
         stdev = self.get_stdev()
         speed_limit = int(round(mean + stdev))
@@ -124,7 +122,7 @@ class Simulation:
 
 
 def main():
-    simulate = Simulation(1000, 60, 30, 10)
+    simulate = Simulation(1000, 60, 30, 100)
     speeds, positions, mean, stdev, speed_limit = simulate.run_simulation()
     return speeds, positions, mean, stdev, speed_limit
 
