@@ -7,7 +7,6 @@ class Car:
         self.position = position
         self.speed = 0
         self.length = 5
-        """ Max Speed/Second"""
         self.max_speed = 33.3
         self.acceleration = 2
         self.slow_percentage = .1
@@ -18,20 +17,20 @@ class Car:
     def __repr__(self):
         return "Position: {}, Speed: {}".format(self.position, self.speed)
 
-    """ Increase speed by acceleration value """
     def accelerate(self):
+        """ Increase speed by acceleration value """
         self.speed += self.acceleration
         if self.speed > self.max_speed:
             self.speed = self.max_speed
 
-    """ Decrease speed by acceleration value """
     def decelerate(self):
+        """ Decrease speed by acceleration value """
         self.speed -= self.acceleration
         if self.speed < 0:
             self.speed = 0
 
-    """ Returns boolean if car has enough space to move """
     def is_able_to_move(self, road):
+        """ Returns boolean if car has enough space to move """
         front = self.position + self.length
         if front > road.length:
             front = front % road.length
@@ -40,8 +39,8 @@ class Car:
         else:
             return True
 
-    """ Call accelerate() or decelerate() """
     def change_speed(self, road):
+        """ Call accelerate() or decelerate() """
         if random.random() < self.slow_percentage:
             self.decelerate()
         elif not self.is_able_to_move(road):
@@ -49,14 +48,14 @@ class Car:
         else:
             self.accelerate()
 
-    """ Change position of car on road based on speed """
     def move_car(self, road):
+        """ Change position of car on road based on speed """
         self.position += self.speed
         if self.position > road.length:
             self.position = self.position % road.length
 
-    """ Adds the car in front to make sure it can move """
     def add_relative_car(self, relative_car):
+        """ Adds the car in front to make sure it can move """
         self.car_in_front = relative_car
 
     def drive(self, road):
@@ -72,15 +71,15 @@ class Road:
         self.length = length
         self.cars = []
 
-    """ Places all the cars on the appropriately lengthy road """
     def place_cars(self):
+        """ Places all the cars on the appropriately lengthy road """
         position = 0
         for _ in range(self.number_of_cars):
             self.cars.append(Car(position))
             position += self.length/self.number_of_cars
 
-    """ Adds the next indexed car's information to the car's attributes """
     def relative_position(self):
+        """ Adds the next indexed car's information to the car's attributes """
         for idx, car in enumerate(self.cars):
             try:
                 self.cars[idx].add_relative_car(self.cars[idx + 1])
@@ -98,9 +97,11 @@ class Simulation:
         self.positions = []
 
     def get_mean(self):
+        """ Returns the mean of speeds """
         return np.mean(self.speeds)
 
     def get_stdev(self):
+        """ Returns the standard deviation of speeds """
         return np.std(self.speeds)
 
     def run_simulation(self):
@@ -111,10 +112,11 @@ class Simulation:
             for unit in range(self.seconds):
                 for car in road.cars:
                     car.drive(road)
-            for car in road.cars:
-                self.speeds.append(car.speeds)
-                self.positions.append(car.positions)
+        for car in road.cars:
+            self.speeds.append(car.speeds)
+            self.positions.append(car.positions)
 
+        print(len(road.cars))
         mean = self.get_mean()
         stdev = self.get_stdev()
         speed_limit = int(round(mean + stdev))
