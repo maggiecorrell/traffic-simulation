@@ -105,6 +105,7 @@ class Simulation:
         return np.std(self.speeds)
 
     def run_simulation(self):
+        """ Runs simulation for initialized seconds and # of runs """
         road = Road()
         road.place_cars()
         road.relative_position()
@@ -115,8 +116,6 @@ class Simulation:
         for car in road.cars:
             self.speeds.append(car.speeds)
             self.positions.append(car.positions)
-
-        print(len(road.cars))
         mean = self.get_mean()
         stdev = self.get_stdev()
         speed_limit = int(round(mean + stdev))
