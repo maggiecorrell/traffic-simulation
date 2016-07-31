@@ -121,10 +121,28 @@ class Simulation:
         speed_limit = int(round(mean + stdev))
         return self.speeds, self.positions, mean, stdev, speed_limit
 
+    # def run_resetting_simulation(self):
+    #     """ Runs simulation of first 60 seconds, x number of times """
+    #     road = Road()
+    #     for _ in range(self.runs):
+    #         road.place_cars()
+    #         road.relative_position()
+    #         for unit in range(self.seconds):
+    #             for car in road.cars:
+    #                 car.drive(road)
+    #     for car in road.cars:
+    #         self.speeds.append(car.speeds)
+    #         self.positions.append(car.positions)
+    #     mean = self.get_mean()
+    #     stdev = self.get_stdev()
+    #     speed_limit = int(round(mean + stdev))
+    #     return self.speeds, self.positions, mean, stdev, speed_limit
+
 
 def main():
     simulate = Simulation(1000, 60, 30, 100)
     speeds, positions, mean, stdev, speed_limit = simulate.run_simulation()
+
     return speeds, positions, mean, stdev, speed_limit
 
 if __name__ == '__main__':
